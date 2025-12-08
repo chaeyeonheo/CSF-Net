@@ -73,25 +73,6 @@ python inference_aft.py \
 ```
 
 
-## 🔧 Configuration
-
-Key parameters in `configs/aft_config.yaml`:
-
-```yaml
-data:
-  Kmax: 3  # Number of semantic candidates (P in paper)
-
-model:
-  fusion_method: "region_based"
-  region_based_selector:
-    region_scales: [32, 16, 8, 4, 2]  # Multi-scale hierarchical selection
-    final_region_size: 1  # Pixel-level precision
-
-loss_weights:
-  l1_masked_weight: 1.0
-  perceptual_weight: 0.1
-  region_consistency_weight: 0.15
-```
 
 ## 📝 Citation
 
