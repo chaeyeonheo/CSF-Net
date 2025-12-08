@@ -1,7 +1,8 @@
+<<<<<<< HEAD
 # CSF-Net: Context-Semantic Fusion Network for Large Mask Inpainting
 
-[![WACV 2026](https://img.shields.io/badge/WACV-2026-blue)](https://wacv2026.thecvf.com/)
-[![Paper](https://img.shields.io/badge/Paper-PDF-red)](./WACV26_CSF_Net__Context_Semantic_Fusion_Network_for_Large_Mask_Inpainting_Camera_Ready.pdf)
+[![WACV 2026](https://wacv.thecvf.com/)](https://wacv2026.thecvf.com/)
+[![Paper](https://arxiv.org/pdf/2511.07987)](https://arxiv.org/pdf/2511.07987)
 [![PyTorch](https://img.shields.io/badge/PyTorch-2.0+-orange)](https://pytorch.org/)
 
 > **CSF-Net: Context-Semantic Fusion Network for Large Mask Inpainting**
@@ -20,48 +21,6 @@ In this paper, we propose a semantic-guided framework to address the challenging
 - **Fusion Decoder**: Cross-attention based fusion for multi-scale feature integration
 - **Hierarchical Pixel Selection**: SSN (Structure Score Network) + PSN (Perceptual Score Network)
 - **Plug-and-Play**: Seamlessly integrates into existing inpainting models without architectural changes
-
-## 🏗️ Architecture Overview
-
-```
-┌─────────────┐
-│   I_mask    │ (Masked Image)
-└──────┬──────┘
-       │
-       ├──────────────┬──────────────┐
-       │              │              │
-┌──────▼──────┐ ┌────▼─────┐  ┌─────▼──────┐
-│  Context    │ │ Semantic │  │  Amodal    │
-│  Encoder    │ │ Encoder  │  │ Completion │
-└──────┬──────┘ └────┬─────┘  └─────┬──────┘
-       │              │              │
-       └──────┬───────┴──────────────┘
-              │
-       ┌──────▼──────┐
-       │   Fusion    │
-       │   Decoder   │
-       └──────┬──────┘
-              │
-       ┌──────▼──────┐
-       │ Hierarchical│
-       │   Pixel     │
-       │  Selection  │
-       │ (SSN + PSN) │
-       └──────┬──────┘
-              │
-       ┌──────▼──────┐
-       │   I_guide   │ (Semantic Guidance)
-       └─────────────┘
-              │
-       ┌──────▼──────┐
-       │  Inpainting │
-       │    Model    │
-       └──────┬──────┘
-              │
-       ┌──────▼──────┐
-       │ Final Result│
-       └─────────────┘
-```
 
 ## 📊 Main Results
 
@@ -122,27 +81,6 @@ python inference_aft.py \
     --output_base_dir ./results
 ```
 
-## 📁 Project Structure
-
-```
-CSF-Net/
-├── models/
-│   ├── aft_network.py              # Main CSF-Net architecture
-│   └── components/
-│       ├── fusion_attention.py     # Fusion Decoder
-│       ├── region_based_selector.py # Hierarchical Pixel Selection
-│       └── swin_transformer_modules.py # Swin Transformer components
-├── data_utils/
-│   ├── aft_dataset.py              # Dataset loader
-│   └── candidate_processing.py     # Candidate filtering & scoring
-├── losses/
-│   ├── aft_losses.py               # CSF-Net losses
-│   └── vgg_perceptual_loss.py      # VGG perceptual loss
-├── configs/
-│   └── aft_config.yaml             # Configuration file
-├── train_aft.py                    # Training script
-└── inference_aft.py                # Inference script
-```
 
 ## 🔧 Configuration
 
@@ -169,12 +107,12 @@ loss_weights:
 If you find this work useful, please cite:
 
 ```bibtex
-@inproceedings{heo2026csf,
-  title={CSF-Net: Context-Semantic Fusion Network for Large Mask Inpainting},
-  author={Heo, Chae-Yeon and Cho, Yeong-Jun},
-  booktitle={Proceedings of the IEEE/CVF Winter Conference on Applications of Computer Vision (WACV)},
-  year={2026}
-}
+@article{heo2025csf,
+        title={CSF-Net: Context-Semantic Fusion Network for Large Mask Inpainting},
+        author={Heo, Chae-Yeon and Cho, Yeong-Jun},
+        journal={arXiv preprint arXiv:2511.07987},
+        year={2025}
+      }
 ```
 
 ## 🙏 Acknowledgements
@@ -199,3 +137,9 @@ This project is released under the MIT License.
 ---
 
 **Note**: This is the official implementation of CSF-Net (WACV 2026).
+=======
+# CSF-Net
+CSF-Net: Context-Semantic Fusion Network for Large Mask Inpainting (WACV 2026)
+
+Coming Soon
+>>>>>>> 3f5ef994f8af95bfaf0bb3d2e9f815e9966b31da
