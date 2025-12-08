@@ -25,18 +25,6 @@ In this paper, we propose a semantic-guided framework to address the challenging
 - **Hierarchical Pixel Selection**: SSN (Structure Score Network) + PSN (Perceptual Score Network)
 - **Plug-and-Play**: Seamlessly integrates into existing inpainting models without architectural changes
 
-## 📊 Main Results
-
-### Quantitative Results on Places365
-
-| Method | Center Box (80%) |  | Center Box (50%) |  | Random (50-80%) |  |
-|--------|---------|--------|---------|--------|---------|--------|
-|        | FID↓    | LPIPS↓ | FID↓    | LPIPS↓ | FID↓    | LPIPS↓ |
-| ASUKA  | 10.10   | 0.377  | 4.408   | 0.143  | 5.835   | 0.332  |
-| **CSF-Net + ASUKA** | **9.434** | **0.332** | **3.612** | **0.105** | **5.324** | **0.325** |
-
-CSF-Net consistently improves performance across all baseline models (LaMa, MAT, DLID, ASUKA) and masking conditions.
-
 ## 🚀 Getting Started
 
 ### Prerequisites
@@ -118,24 +106,11 @@ If you find this work useful, please cite:
       }
 ```
 
-## 🙏 Acknowledgements
-
-This work was supported in part by the National Research Foundation of Korea (NRF) grant funded by the Korea government (MSIT) (No. RS-2025-24683045).
-
-We thank the authors of:
-- [Pix2Gestalt](https://github.com/cvlab-columbia/pix2gestalt) for amodal completion
-- [ASUKA](https://github.com/kodenii/ASUKA-pytorch) for baseline inpainting model
-- [Swin Transformer](https://github.com/microsoft/Swin-Transformer) for backbone architecture
-
 ## 📧 Contact
 
 For questions and discussions, please contact:
 - Chae-Yeon Heo: cyheo001@jnu.ac.kr
 - Yeong-Jun Cho: yj.cho@jnu.ac.kr
-
-## 📜 License
-
-This project is released under the MIT License.
 
 ---
 
