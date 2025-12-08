@@ -1,14 +1,17 @@
-<<<<<<< HEAD
-# CSF-Net: Context-Semantic Fusion Network for Large Mask Inpainting
+# CSF-Net: Context-Semantic Fusion Network for Large Mask Inpainting (WACV 2026)
 
-[![WACV 2026](https://wacv.thecvf.com/)](https://wacv2026.thecvf.com/)
-[![Paper](https://arxiv.org/pdf/2511.07987)](https://arxiv.org/pdf/2511.07987)
-[![PyTorch](https://img.shields.io/badge/PyTorch-2.0+-orange)](https://pytorch.org/)
+[![WACV 2026](https://img.shields.io/badge/WACV-2026-00008B)](https://wacv2026.thecvf.com/)
+[![arXiv](https://img.shields.io/badge/arXiv-2511.07987-B31B1B?logo=arxiv&logoColor=white)](https://arxiv.org/pdf/2511.07987)
+[![PyTorch](https://img.shields.io/badge/PyTorch-2.0+-orange?logo=pytorch&logoColor=white)](https://pytorch.org/)
 
 > **CSF-Net: Context-Semantic Fusion Network for Large Mask Inpainting**
+
+
 > Chae-Yeon Heo and Yeong-Jun Cho*
+
+
 > Department of Artificial Intelligence Convergence, Chonnam National University, South Korea
-> WACV 2026
+
 
 ## 📖 Abstract
 
@@ -137,9 +140,4 @@ This project is released under the MIT License.
 ---
 
 **Note**: This is the official implementation of CSF-Net (WACV 2026).
-=======
-# CSF-Net
-CSF-Net: Context-Semantic Fusion Network for Large Mask Inpainting (WACV 2026)
 
-Coming Soon
->>>>>>> 3f5ef994f8af95bfaf0bb3d2e9f815e9966b31da
