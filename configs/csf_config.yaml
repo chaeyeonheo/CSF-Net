@@ -1,0 +1,194 @@
+# ============================================================================
+# 🚨 Emergency Fix - VGG Content Loss 폭발 문제 해결
+# ============================================================================
+
+# 🎯 진짜 원인: VGG content loss가 119.7%까지 폭발하면서 gradient explosion 유발
+# 🔧 해결책: VGG perceptual loss만 대폭 감소 (다른 성능은 100% 유지)
+
+# configs/csf_config.yaml - Emergency Fix 버전
+
+# 기본 설정 (완전 동일)
+exp_name: "aft_performance_score+vgg_perceptual_weight_0.1"
+seed: 42
+output_dir: "./output/score+vgg_perceptual_epoch_400" 
+world_size: 4
+
+# 데이터 설정 (완전 동일)
+data:
+  train_root: "/home/jovyan/volum1/cy/pix2gestalt/completion_data/test_36500_box_0.8/"
+  val_root: "/home/jovyan/volum1/cy/pix2gestalt/completion_data/test_36500_box_0.8/"
+  test_root: "/home/jovyan/volum1/cy/pix2gestalt/completion_data/test_random50_80/"
+  img_size: 256
+  Kmax: 3
+  use_offline_candidates: true
+  offline_candidate_info_base_dir: "./preprocessed_candidate_info_30/test_random50_80"
+  
+  transform_params:
+    use_augmentation: false 
+    hflip_prob: 0.5
+    mean: [0.485, 0.456, 0.406]
+    std: [0.229, 0.224, 0.225]
+    
+  candidate_filter_params:
+    min_overlap_ratio: 0.15
+    min_amodal_area_ratio: 0.01
+    
+  candidate_scorer_params:
+    lpips_net: 'vgg'
+    lpips_img_size: 256 
+    use_mse: true
+    score_weight_mse: 0.35
+    score_weight_lpips: 0.65
+    mse_calculation_method: "original"
+
+# 💎 성능 100% 유지 모델 설정 (완전 동일)
+model:
+  patch_size: 4
+  window_size: 7 
+  mlp_ratio: 4.0 
+  qkv_bias: true
+  drop_rate: 0.0      # ✅ 성능 100% 유지
+  attn_drop_rate: 0.0 # ✅ 성능 100% 유지
+  drop_path_rate: 0.05  # ✅ 성능 100% 유지
+  norm_layer: "LayerNorm"
+  act_layer: "GELU"
+  patch_norm: true
+  use_checkpoint: false  # ✅ 성능 100% 유지
+  
+  # 모든 네트워크 구조 (완전 동일)
+  context_in_channels: 4 
+  context_embed_dim: 96
+  context_depths: [2, 2, 6, 2]       
+  context_num_heads: [3, 6, 12, 24]  
+  candidate_in_channels: 3 
+  candidate_embed_dim: 96           
+  candidate_depths: [2, 2, 6, 2]    
+  candidate_num_heads: [3, 6, 12, 24]
+  decoder_base_dim: 96 
+  decoder_fusion_num_heads: [24, 12, 6, 3] 
+  final_norm_output: true
+  
+  # ✅ 성능 100% 유지
+  fusion_method: "region_based"
+  use_pixel_fusion: true
+  pixel_fusion_hidden_dim: 256  # ✅ 큰 히든 차원 유지
+  pixel_fusion_strategy: "adaptive"
+  
+  # 💎 픽셀 레벨 설정 (완전 동일)
+  region_based_selector:
+    hidden_dim: 256  # ✅ 성능 100% 유지
+    region_scales: [32, 16, 8, 4, 2]  # ✅ 세밀한 스케일 유지
+    selection_strategy: "hierarchical"
+    final_region_size: 1  # 💎 픽셀 레벨 100% 유지
+    
+  hybrid_fusion:
+    region_weight: 0.8  # ✅ 성능 100% 유지
+    pixel_weight: 0.2
+    confidence_threshold: 0.3
+
+# 🔧 학습 설정 (안정성과 성능의 균형)
+train:
+  epochs: 400
+  batch_size_per_gpu: 20         # 안정성을 위해 감소
+  num_workers: 6
+  lr: 0.0002                     # 🔧 더 적극적인 학습률
+  min_lr: 0.00002               
+  weight_decay: 0.01            
+  optimizer: "AdamW"
+  scheduler: "CosineAnnealingLR" 
+  clip_grad_norm: 2.0            # 🔧 적절한 clipping (1.0 → 2.0)
+  
+  use_ema: true           
+  ema_decay: 0.999        
+  warmup_epochs: 8               # 빠른 학습 시작
+  
+  confidence_threshold_inference: 0.5
+  save_interval: 5
+  save_results_interval: 5
+  test_confidence_thresholds: [0.1, 0.3, 0.5, 0.7, 0.9]
+  visualize_interval_epoch: 1
+  log_interval: 10
+
+# 🚨 VGG 학습이 실제로 진행되도록 수정된 손실 가중치
+loss_weights:
+  # 기본 손실들
+  l1_masked_weight: 1.0         
+  perceptual_weight: 0.1        # 🔧 0.005 → 0.2 (실제 학습 진행을 위해 대폭 증가)
+  confidence_bce_weight: 0.3    
+  confidence_error_correlation_weight: 0.1
+  boundary_loss_weight: 0.1     
+  
+  # 💎 픽셀 레벨 손실들 (가중치 증가)
+  region_consistency_weight: 0.15          
+  hierarchical_consistency_weight: 0.1     
+  selection_consistency_weight: 0.1        
+  edge_preservation_weight: 0.05          
+  color_consistency_weight: 0.05          
+  
+  # 🚨 VGG 설정 (실제 계산되도록 수정)
+  vgg_perceptual_loss:
+    feature_layer_indices: [3, 8, 17]            # 풍부한 특징 사용
+    style_layer_indices: [3, 8]                  
+    style_weight: 0.05    
+    loss_type: 'l1'
+    local_vgg_weights_path: "./pretrained_model/vgg19-dcbb9e9d.pth"
+
+# DDP 설정 (완전 동일)
+distributed:
+  use_ddp: true 
+  dist_backend: 'nccl'
+  init_method: 'env://'
+
+# ✅ 성능 실험 설정들 (백업용 - 안정화 후 사용)
+experiments:
+  # 🚨 Emergency 안정화 실험 (새로 추가)
+  emergency_stability:
+    model:
+      fusion_method: "region_based"
+      region_based_selector:
+        final_region_size: 1  # 💎 픽셀 레벨 유지
+        hidden_dim: 256
+        region_scales: [32, 16, 8, 4, 2]
+    loss_weights:
+      l1_masked_weight: 1.0
+      perceptual_weight: 0.01      # 매우 낮게 설정
+      edge_preservation_weight: 0.05
+      color_consistency_weight: 0.05
+      selection_consistency_weight: 0.1
+      region_consistency_weight: 0.15
+      hierarchical_consistency_weight: 0.1
+    train:
+      lr: 0.0002
+      clip_grad_norm: 0.3    # 매우 강한 clipping
+      
+  # 💎 최고 성능 실험 (안정화 후 복구용)
+  maximum_performance_recovery:
+    model:
+      fusion_method: "region_based"
+      region_based_selector:
+        final_region_size: 1  # 💎 픽셀 레벨 유지
+        hidden_dim: 512
+        region_scales: [64, 32, 16, 8, 4, 2]
+    loss_weights:
+      l1_masked_weight: 2.5
+      perceptual_weight: 0.3    # 안정화 후 점진적 증가 목표
+      edge_preservation_weight: 0.2
+      color_consistency_weight: 0.2
+      selection_consistency_weight: 0.3
+      region_consistency_weight: 0.4
+      hierarchical_consistency_weight: 0.3
+
+# 성능 모니터링 설정 (완전 동일)
+performance_monitoring:
+  track_pixel_accuracy: true
+  track_edge_preservation: true
+  track_color_consistency: true
+  track_selection_quality: true
+  save_attention_maps: true
+  save_selection_weights: true
+  
+# Wandb 설정
+wandb:
+  project: "CSF-Net-Emergency-Fix"
+  tags: ["pixel-level", "vgg-content-fix", "gradient-stability"]
+  notes: "Emergency Fix: VGG Content Loss 폭발 문제 해결"

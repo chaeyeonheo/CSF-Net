@@ -1,0 +1,27 @@
+wandb/
+*.log
+logs/
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+*.pth
+*.txt
+*.png
+*.jpg
+# 이미지 파일 무시
+*.png
+*.jpg
+*.jpeg
+
+# 압축 파일 무시
+*.zip
+
+# PyTorch 모델 가중치 파일 무시
+*.pth
+*.pt
+*.th
+
+*.json
+
+# 기타 흔히 무시되는 파일들 (선택사항)
+*.tmp
