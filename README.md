@@ -79,12 +79,14 @@ python inference_aft.py \
 If you find this work useful, please cite:
 
 ```bibtex
-@article{heo2025csf,
-        title={CSF-Net: Context-Semantic Fusion Network for Large Mask Inpainting},
-        author={Heo, Chae-Yeon and Cho, Yeong-Jun},
-        journal={arXiv preprint arXiv:2511.07987},
-        year={2025}
-      }
+@InProceedings{Heo_2026_WACV,
+    author    = {Heo, Chae-Yeon and Cho, Yeong-Jun},
+    title     = {CSF-Net: Context-Semantic Fusion Network for Large Mask Inpainting},
+    booktitle = {Proceedings of the IEEE/CVF Winter Conference on Applications of Computer Vision (WACV)},
+    month     = {March},
+    year      = {2026},
+    pages     = {8292-8301}
+}
 ```
 
 ## 📧 Contact
