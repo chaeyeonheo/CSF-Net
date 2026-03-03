@@ -1,6 +1,6 @@
 # CSF-Net: Context-Semantic Fusion Network for Large Mask Inpainting (WACV 2026)
 
-[![WACV 2026](https://img.shields.io/badge/WACV-2026-00008B)](https://wacv2026.thecvf.com/)
+[![WACV 2026]([https://img.shields.io/badge/WACV-2026-00008B)](https://wacv2026.thecvf.com/](https://openaccess.thecvf.com/content/WACV2026/papers/Heo_CSF-Net_Context-Semantic_Fusion_Network_for_Large_Mask_Inpainting_WACV_2026_paper.pdf))
 [![arXiv](https://img.shields.io/badge/arXiv-2511.07987-B31B1B?logo=arxiv&logoColor=white)](https://arxiv.org/pdf/2511.07987)
 [![PyTorch](https://img.shields.io/badge/PyTorch-2.0+-orange?logo=pytorch&logoColor=white)](https://pytorch.org/)
 
